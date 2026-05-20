@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from .models import Todo
 
 # Create your tests here.
-class TododAPITests(APITestCase):
+class TodoAPITests(APITestCase):
 
 	def setUp(self):
 		"""Runs before every test to create a sample todo"""
@@ -18,7 +18,7 @@ class TododAPITests(APITestCase):
 
 	def test_create_todo(self):
 		"""This test checks whether we can correctly post a todo item"""
-		todoData = {"title": "New todo title", "description": "New description text"}
-		response = self.client.post(self.list_url, todoData, format='json')
+		todo_data = {"title": "New todo title", "description": "New description text"}
+		response = self.client.post(self.list_url, todo_data, format='json')
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 		self.assertEqual(Todo.objects.count(), 2)
