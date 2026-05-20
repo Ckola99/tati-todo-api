@@ -22,3 +22,9 @@ class TodoAPITests(APITestCase):
 		response = self.client.post(self.list_url, todo_data, format='json')
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 		self.assertEqual(Todo.objects.count(), 2)
+
+	def test_list_todos(self):
+		"""This test checks whether we are able to list all items in the database"""
+		response = self.client.get(self.list_url)
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+		self.assertEqual(len(response.data), 1)
