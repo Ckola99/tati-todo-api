@@ -33,5 +33,18 @@ class TodoAPITests(APITestCase):
 		"""This test checks whether it is able to retieve one single todo item"""
 		response = self.client.get(self.detail_url)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
-		self.assertEqual(response.data['title'], "Test todo")
-	
+		self.assertEqual(response.data["title"], "Test todo")
+
+	def test_update_todo(self):
+		"""This test checks whether we are able to successfully update a todo item"""
+		updated_data = {"title": "Updated title", "description": "Updated description", "is_completed": True}
+		response = self.client.put(self.detail_url, updated_data, format='json')
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+		self.assertEqual(response.data["title"], "Updated title")
+		self.assertEqual(response.data["is_completed"], True)
+
+	def test_delete_todo(self):
+		"""This test checks whether we are able to succefully delete a todo item"""
+		response = self.client.delete(self.detail_url)
+		self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+		self.assertEqual(Todo.objects.count(), 0)
