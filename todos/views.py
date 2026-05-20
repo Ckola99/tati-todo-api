@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
+"""ViewSet providing CRUD operations for Todo items with logging."""
 class TodoViewSet(viewsets.ModelViewSet):
 	queryset = Todo.objects.all()
 	serializer_class = TodoSerializer
