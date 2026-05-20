@@ -64,7 +64,7 @@ class TodoAPITests(APITestCase):
 		self.assertEqual(Todo.objects.count(), 1)
 
 	def test_retrieve_nonexistent_todo(self):
-		"""This checks whether we habdle the error state of retrieving a nonexistent todo item"""
+		"""This checks whether we handle the error state of retrieving a nonexistent todo item"""
 		url = reverse('todo-detail', kwargs={'pk': 999})
 		response = self.client.get(url)
 		self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
