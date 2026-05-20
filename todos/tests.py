@@ -48,3 +48,23 @@ class TodoAPITests(APITestCase):
 		response = self.client.delete(self.detail_url)
 		self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 		self.assertEqual(Todo.objects.count(), 0)
+
+	def test_create_todo_invalid_title(self):
+		"""This test checks whether our validators are working and we handle error state of creating an invalid todo with an incomplete title"""
+		todo_data = {"title": "Ne", "description": "New description text"}
+		response = self.client.post(self.list_url, todo_data, format='json')
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+		self.assertEqual(Todo.objects.count(), 1)
+
+	def test_create_todo_missing_fields(self):
+		"""This test checks whether we handle the error state of adding a todo with missing fields"""
+		todo_data = {}
+		response = self.client.post(self.list_url, todo_data, format='json')
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+		self.assertEqual(Todo.objects.count(), 1)
+
+	def test_retrieve_nonexistent_todo(self):
+		"""This checks whether we habdle the error state of retrieving a nonexistent todo item"""
+		url = reverse('todo-detail', kwargs={'pk': 999})
+		response = self.client.get(url)
+		self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
