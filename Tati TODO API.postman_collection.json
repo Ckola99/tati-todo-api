@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "848c493c-8f1d-499b-b2d4-27dc77010636",
+    "name": "Tati TODO API",
+    "description": "REST API for managing TODO items. Built with Django REST Framework. Run Create Todo first — the returned ID is automatically used by Retrieve, Update, and Delete requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30775672"
+  },
+  "item": [
+    {
+      "name": "List Todos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "todos",
+            ""
+          ]
+        },
+        "description": "Retrieves all todo items"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Todo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();\r",
+              "pm.collectionVariables.set(\"todo_id\", jsonData.id);"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Sample todo\", \"description\": \"Sample description\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/todos/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "todos",
+            ""
+          ]
+        },
+        "description": "Creates a new todo item. Requires title and description fields (minimum 3 characters each)"
+      },
+      "response": []
+    },
+    {
+      "name": "Retrieve Todo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/{{todo_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "todos",
+            "{{todo_id}}",
+            ""
+          ]
+        },
+        "description": "Retrieves a single todo item by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Todo",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Updated todo\", \"description\": \"Updated description\", \"is_completed\": true}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/todos/{{todo_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "todos",
+            "{{todo_id}}",
+            ""
+          ]
+        },
+        "description": "Updates all fields of an existing todo item by ID. Requires title, description, and is_completed fields"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Todo",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/todos/{{todo_id}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "todos",
+            "{{todo_id}}",
+            ""
+          ]
+        },
+        "description": "Deletes a todo item by ID. Returns 204 No Content on success"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://tati-todo-api.onrender.com/api",
+      "type": "string"
+    },
+    {
+      "key": "todo_id",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}
